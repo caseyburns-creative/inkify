@@ -4,37 +4,6 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="stylesheet" type="text/css" href="custom.css">
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', function() {
-            var canvas = document.createElement('canvas');
-            document.querySelector('main').appendChild(canvas);
-
-            // Load and render your 3D model
-            var loader = new THREE.GLTFLoader();
-            loader.load('path/to/your/glb/file.glb', function(gltf) {
-                var scene = gltf.scene;
-                // Perform any additional operations or configurations on the loaded model if needed
-                // Example: scene.rotation.x = Math.PI / 2;
-
-                var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-                var renderer = new THREE.WebGLRenderer({ canvas: canvas });
-                renderer.setSize(window.innerWidth, window.innerHeight);
-
-                // Add lights or any other necessary setup
-                // Example: scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-
-                var animate = function() {
-                    requestAnimationFrame(animate);
-                    // Add any animation or updates to the scene
-                    // Example: scene.rotation.y += 0.01;
-                    
-                    renderer.render(scene, camera);
-                };
-
-                animate();
-            });
-        });
-    </script>
 </head>
 <body>
     <header>
@@ -42,10 +11,38 @@
     </header>
 
     <main>
+        <div id="canvas"></div>
     </main>
 
     <footer>
         <p>© 2023 Inkify</p>
     </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('canvas');
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            canvas.appendChild(renderer.domElement);
+
+            var loader = new THREE.GLTFLoader();
+            loader.load('path/to/your/3d/model.glb', function(gltf) {
+                var scene = gltf.scene;
+                scene.position.set(0, 0, 0); // Adjust the position if needed
+                scene.scale.set(1, 1, 1); // Adjust the scale if needed
+                scene.rotation.set(0, 0, 0); // Adjust the rotation if needed
+
+                var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                camera.position.set(0, 0, 3); // Adjust the camera position if needed
+
+                var animate = function() {
+                    requestAnimationFrame(animate);
+                    renderer.render(scene, camera);
+                };
+
+                animate();
+            });
+        });
+    </script>
 </body>
 </html>
