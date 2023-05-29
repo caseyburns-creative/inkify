@@ -3,6 +3,38 @@
 <head>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="stylesheet" type="text/css" href="custom.css">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.createElement('canvas');
+            document.querySelector('main').appendChild(canvas);
+
+            // Load and render your 3D model
+            var loader = new THREE.GLTFLoader();
+            loader.load('path/to/your/glb/file.glb', function(gltf) {
+                var scene = gltf.scene;
+                // Perform any additional operations or configurations on the loaded model if needed
+                // Example: scene.rotation.x = Math.PI / 2;
+
+                var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                var renderer = new THREE.WebGLRenderer({ canvas: canvas });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                // Add lights or any other necessary setup
+                // Example: scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+                var animate = function() {
+                    requestAnimationFrame(animate);
+                    // Add any animation or updates to the scene
+                    // Example: scene.rotation.y += 0.01;
+                    
+                    renderer.render(scene, camera);
+                };
+
+                animate();
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
